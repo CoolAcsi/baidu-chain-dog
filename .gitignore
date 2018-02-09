@@ -1,22 +1,36 @@
-# Compiled class file
-*.class
+# kdiff3 ignore
+*.orig
+~
+# maven ignore
+target/
 
-# Log file
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# temp ignore
 *.log
+*.cache
+*.diff
+*.patch
+*.tmp
+catalina.base_IS_UNDEFINED/
 
-# BlueJ files
-*.ctxt
+# system ignore
+.DS_Store
+Thumbs.db
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# package ignore (optional)
+# *.jar
+# *.war
+# *.zip
+# *.tar
+# *.tar.gz
+catalina.base_IS_UNDEFINED/
