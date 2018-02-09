@@ -11,6 +11,10 @@
 - 支持多账号同时运行；
 
 ### 使用
+对于没有接触过java的同学，可以使用 [intellig idea](https://www.jetbrains.com/idea/)，参考网上教程配好[jdk](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)（此工程只能使用jdk8（9也不行））
+
+准备就绪后找到Application.java，点击下图中的运行按钮即可启动应用。
+![](https://ws4.sinaimg.cn/large/006tKfTcly1foaizv2a2ej30lo0cq75v.jpg)
 
 1. Application.java 配置端口号；
 2. RareDegree.java类配置买入价格；
