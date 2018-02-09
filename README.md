@@ -20,7 +20,7 @@
 2. RareDegree.java类配置买入价格；
 3. PetOperationInvoke.java 可自定义header；
 4. TestController.java 配置用户cookie；
-5. 准备就绪后启动应用，并访问页面`http://localhost:{port}/start`(port为你配置的端口号，默认8081)启动任务；（该页面只能访问一次，重复访问会加快抓取速度但不保证服务可靠性）
+5. 准备就绪后启动应用，并访问页面`http://localhost:{port}/start`(port为你配置的端口号，默认8080)启动任务；（该页面只能访问一次，重复访问会加快抓取速度但不保证服务可靠性）
 6. enjoy it~
 
 
