@@ -1,6 +1,9 @@
 ## 百度莱茨狗购买爬虫
 [莱茨狗](https://pet-chain.baidu.com/)
 
+效果图：
+![](https://ws1.sinaimg.cn/large/006tKfTcly1foajh6yj97j31ge0miteu.jpg)
+
 ### 功能
 当前版本只是简单地根据预定价格自动买入。
 
