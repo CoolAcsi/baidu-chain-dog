@@ -3,7 +3,7 @@ package site.acsi.baidu.dog.vo;
 import lombok.Data;
 
 /**
- * @author xiangdong.liu
+ * @author Acsi
  * @date 2018/2/9
  */
 @Data

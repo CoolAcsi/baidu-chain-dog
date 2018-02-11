@@ -29,21 +29,10 @@ public class ImageUtils {
      * @param rgb rgb
      * @return 是否为黑色
      */
-    public boolean isBlack(int rgb) {
+    boolean isBlack(int rgb) {
         Color color = new Color(rgb);
         return color.getRed() + color.getGreen() + color.getBlue() <= 300;
     }
-
-    /**
-     * 获得训练集图片的分类，如a-12.jpg，返回a
-     * @param filename 文件名
-     * @return imgClass
-     */
-    public String getImgClass(String filename){
-        String[] arr = filename.split("-");
-        return arr[0];
-    }
-
 
     /**
      * 打印图片，调试时使用
@@ -244,7 +233,6 @@ public class ImageUtils {
      * @return 切割成若干图片
      */
     public List<BufferedImage> cfs(BufferedImage sourceImage){
-        List<BufferedImage> cfgList = Lists.newArrayList();
 
         int width = sourceImage.getWidth();
         int height = sourceImage.getHeight();
@@ -317,12 +305,11 @@ public class ImageUtils {
             }
         }
 
-        System.out.println();
-        cfsToImage(subImgList, cfgList);
-        return cfgList;
+        return cfsToImage(subImgList);
     }
 
-    private List<BufferedImage> cfsToImage(List<SubImage> subImgList, List<BufferedImage> bufferedImages){
+    private List<BufferedImage> cfsToImage(List<SubImage> subImgList){
+        List<BufferedImage> bufferedImages = Lists.newArrayList();
         for (SubImage subImage : subImgList) {
             BufferedImage image = new BufferedImage(subImage.width, subImage.height, BufferedImage.TYPE_BYTE_BINARY);
             for (int x = 0; x < subImage.width; x++) {

@@ -32,9 +32,11 @@ public class VerificationCodeUtils {
 
     private svm_model model;
 
+    public static final int CHAR_NUM = 36;
+
     public VerificationCodeUtils() throws IOException {
         String labelName = "1234567890abcdefghijklmnopqrstuvwxyz";
-        for (int i = 0; i < 36; i++) {
+        for (int i = 0; i < CHAR_NUM; i++) {
             labels.put(i + 1, String.valueOf(labelName.charAt(i)));
         }
         URL url = getClass().getClassLoader().getResource("svm.model");
@@ -55,6 +57,7 @@ public class VerificationCodeUtils {
         List<String> svmTest = formatSvm(filterImgs);
         // 预测
         StringBuilder result = doPredict(svmTest);
+
         return result.toString();
     }
 
