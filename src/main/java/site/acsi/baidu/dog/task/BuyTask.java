@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Component
 @Slf4j
-public class BugTask {
+public class BuyTask {
     @Resource
     private PetOperationService service;
 
@@ -65,7 +65,7 @@ public class BugTask {
                 tryCreateOrder(acount, pets);
             } catch (Throwable e) {
                 if (config.getConfig().getLogSwitch()) {
-                    log.error("请求宠物市场列表失败, user:{}，error:{}", acount.getDes(), e);
+                    log.error("请求宠物市场列表失败, user:{}", acount.getDes(), e);
                 }
             }
         }
@@ -81,7 +81,7 @@ public class BugTask {
                 }
             } catch (Throwable e) {
                 if (config.getConfig().getLogSwitch()) {
-                    log.error("生单时发生异常, user:{}, error:{}", acount.getDes(), e);
+                    log.error("生单时发生异常, user:{}", acount.getDes(), e);
                 }
                 log.info("生单时发生异常, user:{} petId:{}，amount:{}", acount.getDes(), item.getPetId(), item.getAmount());
 
@@ -89,7 +89,7 @@ public class BugTask {
         }
     }
 
-    private void pageLog(int currPage, List<SaleData.Pet> pets ,String userName) {
+    private void pageLog(int currPage, List<SaleData.Pet> pets, String userName) {
         if (!pets.isEmpty()) {
             StringBuilder info = new StringBuilder();
             for (SaleData.Pet pet : pets) {
@@ -98,7 +98,7 @@ public class BugTask {
                 info.append(pet.getAmount());
                 info.append(COMMA_SEPARATEOR);
             }
-//            log.info("===  page:{} userName:{}，{}", currPage, userName, info);
+            log.info("===  page:{} user:{}，{}", currPage, userName, info);
         }
     }
 
@@ -114,9 +114,9 @@ public class BugTask {
         if (doneOrderSet.isCompleted(item.getPetId())) {
             return;
         }
-        log.info("=========================  开始生单 user:{} petid:{} amount:{}",acount.getDes(), item.getPetId(), item.getAmount());
+        log.info("=========================  开始生单 user:{} petid:{} amount:{}", acount.getDes(), item.getPetId(), item.getAmount());
         CreateOrderStatus status = service.createOrder(acount, item.getPetId(), item.getAmount(), item.getValidCode());
-        log.info("===  user:{} success:{} message:{} petid:{} amount:{}", acount.getDes(), status.getSuccess(), status.getMessage(), item.getPetId(), item.getAmount());
+        log.info("===  user:{} success:{} message:{} petid:{} 稀有度:{} amount:{}", acount.getDes(), status.getSuccess(), status.getMessage(), item.getPetId(), rareDegreeMap.get(item.getRareDegree()), item.getAmount());
         if (status.getSuccess()) {
             log.info("******************  success user:{} 稀有度：{} 价格：{} ******************", acount.getDes(), rareDegreeMap.get(item.getRareDegree()), item.getAmount());
         }

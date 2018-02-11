@@ -15,4 +15,5 @@ public class GlobalConfigBean {
     private List<Amount> amounts;
     private List<Acount> acounts;
     private String exportVerCodeImgPath;
+    private Boolean exportSwitch;
 }

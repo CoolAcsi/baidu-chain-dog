@@ -5,7 +5,7 @@
 如果这个项目对你有帮助，烦请点一下右上角的star，thanks~
 
 效果图：
-![](https://ws1.sinaimg.cn/large/006tKfTcly1foajh6yj97j31ge0miteu.jpg)
+![](https://ws4.sinaimg.cn/large/006tKfTcly1fochjbt23dj31iu0jin45.jpg)
 
 ### 功能
 当前版本只是简单地根据预定价格自动买入。
@@ -23,11 +23,9 @@
 ![](https://ws4.sinaimg.cn/large/006tKfTcly1foaizv2a2ej30lo0cq75v.jpg)
 
 1. Application.java 配置端口号；
-2. RareDegree.java类配置买入价格；
-3. PetOperationInvoke.java 可自定义header；
-4. TestController.java 配置用户cookie；
-5. 准备就绪后启动应用，并访问页面`http://localhost:{port}/start`(port为你配置的端口号，默认8080)启动任务；（该页面只能访问一次，重复访问会加快抓取速度但不保证服务可靠性）
-6. enjoy it~
+2. config.json配置用户信息、价格等；
+3. 准备就绪后启动应用；
+4. enjoy it~
 
 
 ### 说明
@@ -37,9 +35,16 @@
  
  该工程只有训练好的模型，训练算法近几日开源； 
  
+
+ ### 版本更新
+ #### v0.5
+ - 项目重构，欢迎review  : )
+ - 优化了验证码校验逻辑，生单速度目测提升50%；
+ - 更灵活的配置方式，使用config.json即可完成必要配置，开放一些配置项；
+ - 更简洁的启动方式；
+ - 更加人性化的日志；
  
- 写得比较仓促，代码质量比较差，慢慢重构。
  
+ 欢迎交流，不乐意回答如何搭环境、如何运行等非技术问题，下面是我的微信：
  
- 欢迎加微信交流，拒绝回答如何搭环境、如何运行等非技术问题，不过可以拉你进群。
  ![](https://ws4.sinaimg.cn/large/006tKfTcly1foahsdmz9vj30e80e8t8w.jpg)

@@ -43,7 +43,7 @@ public class VerCodeTask {
     private VerificationCodeUtils verificationCodeUtils;
 
     @Resource
-    private BugTask bugTask;
+    private BuyTask buyTask;
 
     @Resource
     private GlobalConfig config;
@@ -64,7 +64,7 @@ public class VerCodeTask {
     private void init() {
         config.getConfig().getAcounts().forEach((acount -> queueMap.put(acount, Lists.newLinkedList())));
         for (Acount acount : config.getConfig().getAcounts()) {
-            bugTask.doTask(acount);
+            buyTask.doTask(acount);
             Thread.sleep(config.getConfig().getTime()/config.getConfig().getAcounts().size());
         }
     }
@@ -104,7 +104,9 @@ public class VerCodeTask {
                 if (config.getConfig().getLogSwitch()) {
                     log.info("储备验证码成功，user:{} code:{}", acount.getDes(), code);
                 }
-                imageUtils.convertBase64DataToImage(data.getImg(), config.getConfig().getExportVerCodeImgPath() + "/" + code + ".jpg");
+                if (config.getConfig().getExportSwitch()) {
+                    imageUtils.convertBase64DataToImage(data.getImg(), config.getConfig().getExportVerCodeImgPath() + "/" + code + ".jpg");
+                }
             } catch (IOException e) {
                 if (config.getConfig().getLogSwitch()) {
                     log.error("识别验证码失败", e);

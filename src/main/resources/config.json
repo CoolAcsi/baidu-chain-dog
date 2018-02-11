@@ -1,6 +1,7 @@
 {
   "time": 500,
   "logSwitch": true,
+  "exportSwitch": false,
   "exportVerCodeImgPath": "验证码导出路径",
   "acounts": [
     {
