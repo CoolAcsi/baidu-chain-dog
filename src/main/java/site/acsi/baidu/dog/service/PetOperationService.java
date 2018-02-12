@@ -37,7 +37,7 @@ public class PetOperationService {
     private static final String REFERER_FORMAT = "https://pet-chain.baidu.com/chain/detail?channel=market&petId=%s&appId=1&validCode=%s";
     private static final int APP_ID = 4;
     private static final int ZERO = 0;
-    private static final int FIRST_PAGE = 1;
+    private static final int FIRST_PAGE = 5;
     private static final int ONE_SECOND = 1000;
 
     @SneakyThrows
@@ -78,13 +78,13 @@ public class PetOperationService {
                 break;
             case "100":
                 log.info("=== 验证码不正确，重新识别 user:{}", acount.getDes());
-                return createOrder(acount, petId, amount, validCode);
+                break;
             case "10002":
                 doneOrderSet.add(petId);
+                break;
             default:
-                log.info("=== 生单返回状态码错误 user:{} response:{}", acount.getDes(), response);
                 log.info("=== 生单返回状态码错误，暂停交易 user:{} response:{}", acount.getDes(), response);
-                Thread.sleep(10 * ONE_SECOND);
+                Thread.sleep(30 * ONE_SECOND);
                 break;
         }
 

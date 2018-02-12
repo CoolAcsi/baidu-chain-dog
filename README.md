@@ -4,6 +4,8 @@
 
 如果这个项目对你有帮助，烦请点一下右上角的star，thanks~
 
+v0.6版本使用前请先解压`resources/`下的`svm.model.zip`文件到该目录；
+
 效果图：
 ![](https://ws4.sinaimg.cn/large/006tKfTcly1fochjbt23dj31iu0jin45.jpg)
 
@@ -11,7 +13,7 @@
 当前版本只是简单地根据预定价格自动买入。
 
 ### 特色
-- 本地、快速、较为准确的验证码识别机制；
+- 本地、快速、准确的验证码识别机制，识别正确率高达96%；
 - 健壮的抓狗机制，长时间挂机不会被block；
 - 允许失败重抓（主要针对验证码识别错误）；
 - 支持多账号同时运行；
@@ -27,6 +29,62 @@
 3. 准备就绪后启动应用；
 4. enjoy it~
 
+config.json 配置
+```
+{
+  // 每次刷新的时间间隔
+  "time": 500,
+  // 是否显示全量日志
+  "logSwitch": false,
+  // 是否导出验证码到本地
+  "exportSwitch": false,
+  // 导出验证码路径
+  "exportVerCodeImgPath": "",
+  // 账号，可以添加多个
+  "acounts": [
+    {
+      // 账号描述，在日志中表示用户名
+      "des": "Acsi",
+      "cookie":"我的cookie"
+    }
+  ],
+  // 价格配置，目前只有购买价格是生效的
+  "amounts":[
+    {
+      "rareDegree": 0,
+      "des":"普通",
+      "buyAmount": 250,
+      "saleAmount": 999999
+    },{
+      "rareDegree": 1,
+      "des":"稀有",
+      "buyAmount": 250,
+      "saleAmount": 999999
+    },{
+      "rareDegree": 2,
+      "des":"卓越",
+      "buyAmount": 250,
+      "saleAmount": 999999
+    },{
+      "rareDegree": 3,
+      "des":"史诗",
+      "buyAmount": 500,
+      "saleAmount": 999999
+    },{
+      "rareDegree": 4,
+      "des":"神话",
+      "buyAmount": 40000,
+      "saleAmount": 999999
+    },{
+      "rareDegree": 5,
+      "des":"传说",
+      "buyAmount": 40000,
+      "saleAmount": 999999
+    }
+  ]
+}
+```
+
 
 ### 说明
 你也可以只使用它的验证码识别服务：
@@ -37,9 +95,14 @@
  
 
  ### 版本更新
+ #### v0.6
+ - 修复若干bug；
+ - 优化验证码图像处理算法、重新训练模型，目前正确率提升至96%；
+ - 使用前请先解压`resources/`下的`svm.model.zip`文件到该目录；
+ 
  #### v0.5
  - 项目重构，欢迎review  : )
- - 优化了验证码校验逻辑，生单速度目测提升50%；
+ - 优化了验证码校验逻辑，生单速度目测提升40%；
  - 更灵活的配置方式，使用config.json即可完成必要配置，开放一些配置项；
  - 更简洁的启动方式；
  - 更加人性化的日志；

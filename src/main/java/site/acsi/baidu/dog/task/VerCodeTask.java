@@ -56,7 +56,7 @@ public class VerCodeTask {
 
     private static final int APP_ID = 4;
     private static final int ONE_SECOND = 1000;
-    private static final int SAFE_QUEUE_SIZE = 10;
+    private static final int SAFE_QUEUE_SIZE = 5;
     private static final int VALID_TIME = 600000;
 
     @PostConstruct
@@ -78,8 +78,8 @@ public class VerCodeTask {
 
     @Scheduled(fixedRate = 1000)
     public void doTask() {
-        List<Acount> amounts = config.getConfig().getAcounts();
-        Acount acount = amounts.get((int) (System.currentTimeMillis() % amounts.size()));
+        List<Acount> acounts = config.getConfig().getAcounts();
+        Acount acount = acounts.get((int) (System.currentTimeMillis() % acounts.size()));
         genVerCodeByAcount(acount);
     }
 

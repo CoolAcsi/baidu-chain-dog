@@ -78,6 +78,7 @@ public class BuyTask {
                 Double amount = Doubles.tryParse(item.getAmount());
                 if (canCreateOrder(rareDegree, amount)) {
                     createOrder(acount, item);
+                    Thread.sleep(config.getConfig().getTime()/2);
                 }
             } catch (Throwable e) {
                 if (config.getConfig().getLogSwitch()) {
@@ -116,9 +117,10 @@ public class BuyTask {
         }
         log.info("=========================  开始生单 user:{} petid:{} amount:{}", acount.getDes(), item.getPetId(), item.getAmount());
         CreateOrderStatus status = service.createOrder(acount, item.getPetId(), item.getAmount(), item.getValidCode());
-        log.info("===  user:{} success:{} message:{} petid:{} 稀有度:{} amount:{}", acount.getDes(), status.getSuccess(), status.getMessage(), item.getPetId(), rareDegreeMap.get(item.getRareDegree()), item.getAmount());
+        log.info("===  user:{} success:{} message:{} petid:{} 稀有度:{} amount:{}", acount.getDes(), status.getSuccess(), status.getMessage(), item.getPetId(), rareDegreeMap.get(item.getRareDegree()).getDes(), item.getAmount());
         if (status.getSuccess()) {
-            log.info("******************  success user:{} 稀有度：{} 价格：{} ******************", acount.getDes(), rareDegreeMap.get(item.getRareDegree()), item.getAmount());
+            doneOrderSet.add(item.getPetId());
+            log.info("******************  success user:{} 稀有度：{} 价格：{} ******************", acount.getDes(), rareDegreeMap.get(item.getRareDegree()).getDes(), item.getAmount());
         }
     }
 

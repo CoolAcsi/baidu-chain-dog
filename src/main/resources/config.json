@@ -1,47 +1,44 @@
 {
   "time": 500,
-  "logSwitch": true,
+  "logSwitch": false,
   "exportSwitch": false,
-  "exportVerCodeImgPath": "验证码导出路径",
+  "exportVerCodeImgPath": "",
   "acounts": [
     {
-      "des": "账号用户名，只用于打日志的时候标记，随便写",
-      "cookie":"你的cookie"
-    },{
-      "des": "另一个账号用户名",
-      "cookie":"另一个账号的cookie"
+      "des": "",
+      "cookie":""
     }
   ],
   "amounts":[
     {
       "rareDegree": 0,
       "des":"普通",
-      "buyAmount": 400,
+      "buyAmount": 250,
       "saleAmount": 999999
     },{
       "rareDegree": 1,
       "des":"稀有",
-      "buyAmount": 400,
+      "buyAmount": 250,
       "saleAmount": 999999
     },{
       "rareDegree": 2,
       "des":"卓越",
-      "buyAmount": 500,
+      "buyAmount": 250,
       "saleAmount": 999999
     },{
       "rareDegree": 3,
       "des":"史诗",
-      "buyAmount": 1000,
+      "buyAmount": 500,
       "saleAmount": 999999
     },{
       "rareDegree": 4,
       "des":"神话",
-      "buyAmount": 30000,
+      "buyAmount": 40000,
       "saleAmount": 999999
     },{
       "rareDegree": 5,
       "des":"传说",
-      "buyAmount": 30000,
+      "buyAmount": 40000,
       "saleAmount": 999999
     }
   ]

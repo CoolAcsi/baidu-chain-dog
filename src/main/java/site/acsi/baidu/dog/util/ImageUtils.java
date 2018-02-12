@@ -85,6 +85,27 @@ public class ImageUtils {
                     }
                 }
             }
+
+            for (int y = 0; y< height; y++ ) {
+                List<Integer> list = new ArrayList<>();
+                for (int x=0; x<width; x++) {
+                    int count = 0;
+                    while (x < width -1 && isBlack(img.getRGB(x,y))) {
+                        count ++;
+                        x++;
+                    }
+                    if (count<=px-1 && count > 0) {
+                        for (int i=0; i<=count;i++) {
+                            list.add(x-i);
+                        }
+                    }
+                }
+                if (list.size() != 0) {
+                    for (Integer aList : list) {
+                        img.setRGB(aList, y, Color.white.getRGB());
+                    }
+                }
+            }
         }
         return img;
     }
@@ -157,11 +178,10 @@ public class ImageUtils {
                     binaryBufferedImage.setRGB(x, y, Color.WHITE.getRGB());
                 }
             }
-
         }
 
         // 移除干扰线
-        return removeLine(binaryBufferedImage, 3);
+        return removeLine(binaryBufferedImage, 4);
     }
 
     /**
