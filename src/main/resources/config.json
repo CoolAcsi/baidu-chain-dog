@@ -1,11 +1,12 @@
 {
-  "time": 500,
-  "logSwitch": false,
-  "exportSwitch": false,
-  "exportVerCodeImgPath": "",
+  "time": 300,
+  "logSwitch": true,
+  "exportSwitch": true,
+  "verCodeStrategy": "chaojiying",
+  "exportVerCodeImgPath": "/Users/liuxiangdong/Desktop/baidu-training",
   "acounts": [
     {
-      "des": "",
+      "des": "Acsi",
       "cookie":""
     }
   ],
@@ -13,22 +14,22 @@
     {
       "rareDegree": 0,
       "des":"普通",
-      "buyAmount": 250,
+      "buyAmount": 50,
       "saleAmount": 999999
     },{
       "rareDegree": 1,
       "des":"稀有",
-      "buyAmount": 250,
+      "buyAmount": 70,
       "saleAmount": 999999
     },{
       "rareDegree": 2,
       "des":"卓越",
-      "buyAmount": 250,
+      "buyAmount": 100,
       "saleAmount": 999999
     },{
       "rareDegree": 3,
       "des":"史诗",
-      "buyAmount": 500,
+      "buyAmount": 1000,
       "saleAmount": 999999
     },{
       "rareDegree": 4,

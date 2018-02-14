@@ -34,7 +34,7 @@ url:
 varificationCodeConfig:
   user:
   pass:
-  softId: 894299
+  softId:
   codeType: 1004
   lenMin: 0
-  verCodeStorePath:
+  verCodeStorePath: /Users/liuxiangdong/Desktop/baidu-training

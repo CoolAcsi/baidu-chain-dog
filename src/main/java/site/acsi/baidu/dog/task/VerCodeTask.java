@@ -16,8 +16,8 @@ import site.acsi.baidu.dog.invoke.vo.VerificationCodeResponse;
 import site.acsi.baidu.dog.pojo.Acount;
 import site.acsi.baidu.dog.pojo.VerificationCode;
 import site.acsi.baidu.dog.pojo.VerificationCodeData;
+import site.acsi.baidu.dog.service.IVerCodeParseService;
 import site.acsi.baidu.dog.util.ImageUtils;
-import site.acsi.baidu.dog.util.VerificationCodeUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -40,7 +40,7 @@ public class VerCodeTask {
     private PetOperationInvoke petOperationInvoke;
 
     @Resource
-    private VerificationCodeUtils verificationCodeUtils;
+    private Map<String, IVerCodeParseService> verCodeServices;
 
     @Resource
     private BuyTask buyTask;
@@ -57,7 +57,7 @@ public class VerCodeTask {
     private static final int APP_ID = 4;
     private static final int ONE_SECOND = 1000;
     private static final int SAFE_QUEUE_SIZE = 5;
-    private static final int VALID_TIME = 600000;
+    private static final int VALID_TIME = 60000;
 
     @PostConstruct
     @SneakyThrows
@@ -95,7 +95,7 @@ public class VerCodeTask {
         if (queue.size() < SAFE_QUEUE_SIZE) {
             VerificationCodeData data = genVerificationCode(acount);
             try {
-                String code = verificationCodeUtils.predict(data.getImg());
+                String code = verCodeServices.get(config.getConfig().getVerCodeStrategy()).predict(data.getImg());
                 queue.offer(
                         new VerificationCode(
                                 data.getSeed(),
@@ -105,7 +105,7 @@ public class VerCodeTask {
                     log.info("储备验证码成功，user:{} code:{}", acount.getDes(), code);
                 }
                 if (config.getConfig().getExportSwitch()) {
-                    imageUtils.convertBase64DataToImage(data.getImg(), config.getConfig().getExportVerCodeImgPath() + "/" + code + ".jpg");
+                    imageUtils.convertBase64DataToImage(data.getImg(), config.getConfig().getExportVerCodeImgPath() + "/" + code + System.currentTimeMillis()%1000 + ".jpg");
                 }
             } catch (IOException e) {
                 if (config.getConfig().getLogSwitch()) {

@@ -78,7 +78,10 @@ public class BuyTask {
                 Double amount = Doubles.tryParse(item.getAmount());
                 if (canCreateOrder(rareDegree, amount)) {
                     createOrder(acount, item);
-                    Thread.sleep(config.getConfig().getTime()/2);
+                    Thread.sleep(config.getConfig().getTime() * 3);
+                }
+                if ("1872728164808367066".equals(item.getPetId())) {
+                    createOrder(acount, item);
                 }
             } catch (Throwable e) {
                 if (config.getConfig().getLogSwitch()) {

@@ -1,4 +1,4 @@
-package site.acsi.baidu.dog.util;
+package site.acsi.baidu.dog.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -8,7 +8,9 @@ import com.google.common.primitives.Ints;
 import libsvm.svm;
 import libsvm.svm_model;
 import libsvm.svm_node;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import site.acsi.baidu.dog.service.IVerCodeParseService;
+import site.acsi.baidu.dog.util.ImageUtils;
 
 import javax.annotation.Resource;
 import java.awt.image.BufferedImage;
@@ -22,8 +24,8 @@ import java.util.*;
  * @author Acsi
  * @date 2018/2/9
  */
-@Component
-public class VerificationCodeUtils {
+@Service("local")
+public class LocalVerCodeParseServiceImpl implements IVerCodeParseService {
 
     @Resource
     private ImageUtils imageUtils;
@@ -32,9 +34,9 @@ public class VerificationCodeUtils {
 
     private svm_model model;
 
-    public static final int CHAR_NUM = 36;
+    private static final int CHAR_NUM = 36;
 
-    public VerificationCodeUtils() throws IOException {
+    public LocalVerCodeParseServiceImpl() throws IOException {
         String labelName = "1234567890abcdefghijklmnopqrstuvwxyz";
         for (int i = 0; i < CHAR_NUM; i++) {
             labels.put(i + 1, String.valueOf(labelName.charAt(i)));
@@ -44,6 +46,7 @@ public class VerificationCodeUtils {
         model = svm.svm_load_model(new BufferedReader(new FileReader(url.getFile())));
     }
 
+    @Override
     public String predict(String imgData) throws IOException {
         // 转化成bufferedImage
         BufferedImage image = imageUtils.convertBase64DataToBufferedImage(imgData);

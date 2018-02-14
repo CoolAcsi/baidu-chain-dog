@@ -29,7 +29,7 @@ public class ImageUtils {
      * @param rgb rgb
      * @return 是否为黑色
      */
-    boolean isBlack(int rgb) {
+    public boolean isBlack(int rgb) {
         Color color = new Color(rgb);
         return color.getRed() + color.getGreen() + color.getBlue() <= 300;
     }

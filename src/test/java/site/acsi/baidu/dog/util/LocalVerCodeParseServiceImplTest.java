@@ -4,10 +4,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import site.acsi.baidu.dog.service.impl.LocalVerCodeParseServiceImpl;
 
 import javax.annotation.Resource;
-
-import static org.junit.Assert.*;
 
 /**
  * @author Acsi
@@ -15,9 +14,9 @@ import static org.junit.Assert.*;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class VerificationCodeUtilsTest {
+public class LocalVerCodeParseServiceImplTest {
     @Resource
-    private VerificationCodeUtils utils;
+    private LocalVerCodeParseServiceImpl utils;
 
     @Test
     public void predict() throws Exception {

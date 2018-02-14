@@ -82,6 +82,10 @@ public class PetOperationService {
             case "10002":
                 doneOrderSet.add(petId);
                 break;
+            case "30009":
+                log.info("=== 请从集市购买错误 user:{} validCode:{} response:{}", acount.getDes(), validCode, response);
+                Thread.sleep(30 * ONE_SECOND);
+                break;
             default:
                 log.info("=== 生单返回状态码错误，暂停交易 user:{} response:{}", acount.getDes(), response);
                 Thread.sleep(30 * ONE_SECOND);
