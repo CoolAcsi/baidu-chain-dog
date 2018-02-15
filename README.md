@@ -36,6 +36,10 @@ config.json 配置
   "time": 500,
   // 是否显示全量日志
   "logSwitch": false,
+  // 是否执行程序
+  "isExecutable": true,
+  // 验证码策略，目前支持chaojiying/local，local暂不可用
+  "verCodeStrategy": "chaojiying",
   // 是否导出验证码到本地
   "exportSwitch": false,
   // 导出验证码路径
@@ -95,6 +99,11 @@ config.json 配置
  
 
  ### 版本更新
+ #### v0.7
+ - 修复若干bug；
+ - 增加了对服务器挂机的支持，可以运行时动态修改配置；
+ - 百度更新了验证码，本地识别暂不可用；
+ 
  #### v0.6
  - 修复若干bug；
  - 优化验证码图像处理算法、重新训练模型，目前正确率提升至96%；
