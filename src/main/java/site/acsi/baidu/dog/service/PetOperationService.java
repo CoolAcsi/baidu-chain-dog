@@ -41,7 +41,7 @@ public class PetOperationService {
     private static final int ONE_SECOND = 1000;
 
     @SneakyThrows
-    public List<SaleData.Pet> queryPetsOnSale(PetsSortingEnum sortingEnum, int pageNum, int pageSize, String userName) {
+    public List<Pet> queryPetsOnSale(PetsSortingEnum sortingEnum, int pageNum, int pageSize, String userName) {
         PetOnSaleRequest request = new PetOnSaleRequest();
         request.setAppId(APP_ID);
         request.setPageNo(pageNum > ZERO ? pageNum : FIRST_PAGE);
@@ -77,7 +77,7 @@ public class PetOperationService {
             case "00":
                 break;
             case "100":
-                log.info("=== 验证码不正确，重新识别 user:{}", acount.getDes());
+                log.info("=== 验证码不正确 user:{}", acount.getDes());
                 break;
             case "10002":
                 doneOrderSet.add(petId);

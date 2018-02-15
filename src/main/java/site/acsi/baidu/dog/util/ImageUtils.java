@@ -2,6 +2,7 @@ package site.acsi.baidu.dog.util;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
 import org.assertj.core.util.Lists;
 import org.springframework.stereotype.Component;
 import site.acsi.baidu.dog.pojo.SubImage;
@@ -118,8 +119,8 @@ public class ImageUtils {
      * @throws IOException io 异常
      */
     public void convertBase64DataToImage(String base64ImgData, String filePath) throws IOException {
-        BASE64Decoder d = new BASE64Decoder();
-        byte[] bs = d.decodeBuffer(base64ImgData);
+        Base64 d = new Base64();
+        byte[] bs = d.decode(base64ImgData);
         FileOutputStream os = new FileOutputStream(filePath);
         os.write(bs);
         os.close();

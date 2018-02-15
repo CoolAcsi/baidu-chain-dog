@@ -43,9 +43,6 @@ public class VerCodeTask {
     private Map<String, IVerCodeParseService> verCodeServices;
 
     @Resource
-    private BuyTask buyTask;
-
-    @Resource
     private GlobalConfig config;
 
     @Resource
@@ -56,17 +53,14 @@ public class VerCodeTask {
 
     private static final int APP_ID = 4;
     private static final int ONE_SECOND = 1000;
-    private static final int SAFE_QUEUE_SIZE = 5;
-    private static final int VALID_TIME = 60000;
+    private static final int SAFE_QUEUE_SIZE = 1;
+    private static final int VALID_TIME = 120000;
 
     @PostConstruct
     @SneakyThrows
-    private void init() {
+    public void init() {
+        queueMap.clear();
         config.getConfig().getAcounts().forEach((acount -> queueMap.put(acount, Lists.newLinkedList())));
-        for (Acount acount : config.getConfig().getAcounts()) {
-            buyTask.doTask(acount);
-            Thread.sleep(config.getConfig().getTime()/config.getConfig().getAcounts().size());
-        }
     }
 
     public VerificationCode getVerCodeInfo(Acount acount) {
@@ -76,11 +70,30 @@ public class VerCodeTask {
         return queueMap.get(acount).poll();
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 2000)
     public void doTask() {
+        if (!config.getConfig().getIsExecutable()) {
+            return;
+        }
         List<Acount> acounts = config.getConfig().getAcounts();
+        clearInvalidVerCode(acounts);
         Acount acount = acounts.get((int) (System.currentTimeMillis() % acounts.size()));
         genVerCodeByAcount(acount);
+    }
+
+    private void clearInvalidVerCode(List<Acount> acounts) {
+        acounts.forEach(
+                acount -> {
+                    Queue<VerificationCode> queue = queueMap.get(acount);
+                    while (!queue.isEmpty()) {
+                        if (System.currentTimeMillis() - queue.peek().getCreateTime() > VALID_TIME) {
+                            queue.poll();
+                        } else {
+                            break;
+                        }
+                    }
+                }
+        );
     }
 
     private void genVerCodeByAcount(Acount acount) {

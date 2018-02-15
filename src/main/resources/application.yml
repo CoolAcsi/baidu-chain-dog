@@ -31,10 +31,9 @@ spring:
 url:
   petUrl: https://pet-chain.baidu.com/
   codeParseUrl: http://upload.chaojiying.net/
-varificationCodeConfig:
+chaojiyingConfig:
   user:
   pass:
   softId:
   codeType: 1004
   lenMin: 0
-  verCodeStorePath: /Users/liuxiangdong/Desktop/baidu-training

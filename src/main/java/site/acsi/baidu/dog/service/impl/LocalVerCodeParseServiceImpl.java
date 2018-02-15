@@ -41,9 +41,9 @@ public class LocalVerCodeParseServiceImpl implements IVerCodeParseService {
         for (int i = 0; i < CHAR_NUM; i++) {
             labels.put(i + 1, String.valueOf(labelName.charAt(i)));
         }
-        URL url = getClass().getClassLoader().getResource("svm.model");
-        Preconditions.checkNotNull(url, "无法找到svm模型");
-        model = svm.svm_load_model(new BufferedReader(new FileReader(url.getFile())));
+//        URL url = getClass().getClassLoader().getResource("svm.model");
+//        Preconditions.checkNotNull(url, "无法找到svm模型");
+//        model = svm.svm_load_model(new BufferedReader(new FileReader(url.getFile())));
     }
 
     @Override

@@ -12,6 +12,8 @@ import java.util.List;
 public class GlobalConfigBean {
     private Integer time;
     private String verCodeStrategy;
+    private Long startTime;
+    private Boolean isExecutable;
     private Boolean logSwitch;
     private List<Amount> amounts;
     private List<Acount> acounts;

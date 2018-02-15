@@ -7,6 +7,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import site.acsi.baidu.dog.pojo.GlobalConfigBean;
 
+import javax.annotation.PostConstruct;
 import java.io.InputStreamReader;
 
 /**
@@ -21,12 +22,21 @@ public class GlobalConfig {
 
     private GlobalConfigBean config;
 
+    private ObjectMapper mapper = new ObjectMapper();
+
+    @PostConstruct
     @SneakyThrows
+    public void init() {
+        config = mapper.readValue(new InputStreamReader(resource.getInputStream()), GlobalConfigBean.class);
+        config.setStartTime(System.currentTimeMillis());
+    }
+
     public GlobalConfigBean getConfig() {
-        if (config == null) {
-            ObjectMapper mapper = new ObjectMapper();
-            config = mapper.readValue(new InputStreamReader(resource.getInputStream()), GlobalConfigBean.class);
-        }
         return config;
+    }
+
+    public void setConfig(GlobalConfigBean config) {
+        this.config = config;
+        this.config.setStartTime(System.currentTimeMillis());
     }
 }

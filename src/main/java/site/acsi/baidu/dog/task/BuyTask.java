@@ -8,13 +8,9 @@ import org.springframework.stereotype.Component;
 import site.acsi.baidu.dog.config.GlobalConfig;
 import site.acsi.baidu.dog.enums.PetsSortingEnum;
 import site.acsi.baidu.dog.global.DoneOrderSet;
-import site.acsi.baidu.dog.pojo.Acount;
-import site.acsi.baidu.dog.pojo.Amount;
-import site.acsi.baidu.dog.pojo.CreateOrderStatus;
-import site.acsi.baidu.dog.pojo.SaleData;
+import site.acsi.baidu.dog.pojo.*;
 import site.acsi.baidu.dog.service.PetOperationService;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
@@ -38,26 +34,31 @@ public class BuyTask {
 
     private Map<Integer, Amount> rareDegreeMap = new ConcurrentHashMap<>(6);
 
+    private long startTime;
+
     private static final int FIREST_PAGE = 1;
     private static final int PAGE_SIZE = 20;
     private static final String BLANK = " ";
     private static final String COMMA_SEPARATEOR = "，";
     private static final int FREE_PRICE = 0;
 
-    @PostConstruct
-    private void init() {
+    public void initTask() {
+        rareDegreeMap.clear();
         config.getConfig().getAmounts().forEach((amount -> rareDegreeMap.put(amount.getRareDegree(), amount)));
+        startTime = config.getConfig().getStartTime();
     }
 
     @Async
     @SneakyThrows
     public void doTask(Acount acount) {
-
         while (true) {
+            if (startTime != config.getConfig().getStartTime() || !config.getConfig().getIsExecutable()) {
+                break;
+            }
             Thread.sleep(config.getConfig().getTime());
             try {
                 // 查询宠物市场
-                List<SaleData.Pet> pets = service.queryPetsOnSale(PetsSortingEnum.CREATETIME_DESC, FIREST_PAGE, PAGE_SIZE, acount.getDes());
+                List<Pet> pets = service.queryPetsOnSale(PetsSortingEnum.CREATETIME_DESC, FIREST_PAGE, PAGE_SIZE, acount.getDes());
                 // 日志
                 if (config.getConfig().getLogSwitch()) {
                     pageLog(FIREST_PAGE, pets, acount.getDes());
@@ -71,32 +72,28 @@ public class BuyTask {
         }
     }
 
-    private void tryCreateOrder(Acount acount, List<SaleData.Pet> pets) {
-        for (SaleData.Pet item : pets) {
+    private void tryCreateOrder(Acount acount, List<Pet> pets) {
+        for (Pet pet : pets) {
             try {
-                Amount rareDegree = rareDegreeMap.get(item.getRareDegree());
-                Double amount = Doubles.tryParse(item.getAmount());
-                if (canCreateOrder(rareDegree, amount)) {
-                    createOrder(acount, item);
+                Amount rareDegree = rareDegreeMap.get(pet.getRareDegree());
+                Double amount = Doubles.tryParse(pet.getAmount());
+                if (canCreateOrder(rareDegree, amount, pet)) {
+                    createOrder(acount, pet);
                     Thread.sleep(config.getConfig().getTime() * 3);
-                }
-                if ("1872728164808367066".equals(item.getPetId())) {
-                    createOrder(acount, item);
                 }
             } catch (Throwable e) {
                 if (config.getConfig().getLogSwitch()) {
                     log.error("生单时发生异常, user:{}", acount.getDes(), e);
                 }
-                log.info("生单时发生异常, user:{} petId:{}，amount:{}", acount.getDes(), item.getPetId(), item.getAmount());
-
+                log.info("生单时发生异常, user:{} petId:{}，amount:{}", acount.getDes(), pet.getPetId(), pet.getAmount());
             }
         }
     }
 
-    private void pageLog(int currPage, List<SaleData.Pet> pets, String userName) {
+    private void pageLog(int currPage, List<Pet> pets, String userName) {
         if (!pets.isEmpty()) {
             StringBuilder info = new StringBuilder();
-            for (SaleData.Pet pet : pets) {
+            for (Pet pet : pets) {
                 info.append(rareDegreeMap.get(pet.getRareDegree()).getDes());
                 info.append(BLANK);
                 info.append(pet.getAmount());
@@ -106,15 +103,16 @@ public class BuyTask {
         }
     }
 
-    private boolean canCreateOrder(Amount rareDegree, Double amount) {
+    private boolean canCreateOrder(Amount rareDegree, Double amount, Pet pet) {
         return null != rareDegree
                 && null != amount
                 && amount <= rareDegree.getBuyAmount()
-                && amount > FREE_PRICE;
+                && amount > FREE_PRICE
+                && pet.getGeneration() == 0;
     }
 
     @SneakyThrows
-    private void createOrder(Acount acount, SaleData.Pet item) {
+    private void createOrder(Acount acount, Pet item) {
         if (doneOrderSet.isCompleted(item.getPetId())) {
             return;
         }
