@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -71,7 +70,7 @@ public class VerCodeTask {
         return queueMap.get(acount).poll();
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedDelay = 2000)
     public void doTask() {
         if (!config.getConfig().getIsExecutable()) {
             return;
@@ -111,8 +110,16 @@ public class VerCodeTask {
         }
     }
 
+    @SneakyThrows
     private void storeVerCode(Acount acount) {
-        VerificationCodeData data = genVerificationCode(acount);
+        VerificationCodeData data = null;
+        try {
+            data = genVerificationCode(acount);
+        } catch (Throwable e) {
+            log.error("请求验证码失败", e);
+            Thread.sleep(60000);
+        }
+        Preconditions.checkNotNull(data);
         try {
             String code = verCodeServices.get(config.getConfig().getVerCodeStrategy()).predict(data.getImg());
             queueMap.get(acount).offer(
@@ -143,12 +150,12 @@ public class VerCodeTask {
         VerificationCodeResponse response = call.execute().body();
         if (response == null) {
             log.info("=== 返回验证码数据为空 user:{}", acount.getDes());
-            Thread.sleep(5 * ONE_SECOND);
+            Thread.sleep(60 * ONE_SECOND);
         }
         Preconditions.checkNotNull(response);
         if (response.getData() == null) {
             log.info("== 验证码data为空，可能需要更新cookie user:{}, response:{}", acount.getDes(), response);
-            Thread.sleep(ONE_SECOND);
+            Thread.sleep(60 * ONE_SECOND);
             return genVerificationCode(acount);
         }
         Preconditions.checkNotNull(response.getData());
