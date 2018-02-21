@@ -38,7 +38,7 @@ public class DogMarketTask {
     private static final int FIREST_PAGE = 1;
     private static final int PAGE_SIZE = 20;
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 4000)
     @SneakyThrows
     private void queryMarket() {
         try {
@@ -55,11 +55,11 @@ public class DogMarketTask {
             log.error("请求宠物商店失败，暂停查询", e);
             failedCount++;
             Thread.sleep(4000);
-            if (failedCount > 3) {
+            if (failedCount > 1) {
                 failedCount = 0;
-                Thread.sleep(300000);
+                Thread.sleep(600000);
             }
         }
-        Thread.sleep(System.currentTimeMillis() % 2000);
+        Thread.sleep(System.currentTimeMillis() % 4000);
     }
 }

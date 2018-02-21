@@ -6,7 +6,7 @@
 
     <groupId>site.acsi.baidu.dog</groupId>
     <artifactId>baidu-dog</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.8-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -264,11 +264,11 @@
                         </goals>
                     </execution>
                 </executions>
-                <!-- <configuration>
-                <jvmArguments>
-                 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=127.0.0.1:5005
-                </jvmArguments>
-                </configuration>-->
+                <configuration>
+                    <jvmArguments>
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=127.0.0.1:5005
+                    </jvmArguments>
+                </configuration>
             </plugin>
         </plugins>
     </build>
