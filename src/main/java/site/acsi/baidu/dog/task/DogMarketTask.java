@@ -57,7 +57,7 @@ public class DogMarketTask {
             Thread.sleep(4000);
             if (failedCount > 1) {
                 failedCount = 0;
-                Thread.sleep(600000);
+                Thread.sleep(300000);
             }
         }
         Thread.sleep(System.currentTimeMillis() % 6000);
