@@ -54,7 +54,7 @@ public class VerCodeTask {
 
     private static final int APP_ID = 1;
     private static final int ONE_SECOND = 1000;
-    private static final int SAFE_QUEUE_SIZE = 0;
+    private static final int SAFE_QUEUE_SIZE = 1;
     private static final int VALID_TIME = 120000;
 
     @PostConstruct
