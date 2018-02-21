@@ -35,7 +35,7 @@ public class PetOperationService {
 
 
     private static final String REFERER_FORMAT = "https://pet-chain.baidu.com/chain/detail?channel=market&petId=%s&appId=1&validCode=%s";
-    private static final int APP_ID = 4;
+    private static final int APP_ID = 1;
     private static final int ZERO = 0;
     private static final int FIRST_PAGE = 5;
     private static final int ONE_SECOND = 1000;
@@ -55,7 +55,7 @@ public class PetOperationService {
 
         if (saleData == null || saleData.getData() == null) {
             log.info("== 宠物商店返回数据异常 user:{} response:{}", userName, saleData);
-            Thread.sleep(2 * ONE_SECOND);
+            Thread.sleep(10 * ONE_SECOND);
             return queryPetsOnSale(sortingEnum, pageNum, pageSize, userName);
         }
         return saleData.getData().getPetsOnSale();
@@ -75,6 +75,10 @@ public class PetOperationService {
 
         switch (response.getErrorNo()) {
             case "00":
+                Thread.sleep(300000);
+                break;
+                case "08":
+                Thread.sleep(30000);
                 break;
             case "100":
                 log.info("=== 验证码不正确 user:{}", acount.getDes());
@@ -94,6 +98,17 @@ public class PetOperationService {
 
         return new CreateOrderStatus("00".equals(response.getErrorNo()),
                 response.getErrorNo() + response.getErrorMsg());
+    }
+
+    @SneakyThrows
+    public PetDetail queryPetById(String petId) {
+        PetQueriedByIdRequest request = new PetQueriedByIdRequest();
+        request.setRequestId(System.currentTimeMillis());
+        request.setPetId(petId);
+        request.setAppId(APP_ID);
+        PetQueriedByIdResponse response = petOperationInvoke.queryPetById(request).execute().body();
+        Preconditions.checkNotNull(response, "查询宠物详情失败");
+        return response.getData();
     }
 
     private CreateOrderRequest initCreateOrderRequest(String petId,

@@ -1,13 +1,14 @@
 {
-  "time": 250,
-  "logSwitch": true,
+  "time": 1000,
+  "logSwitch": false,
   "exportSwitch": false,
   "isExecutable": true,
   "verCodeStrategy": "chaojiying",
   "exportVerCodeImgPath": "",
+  "isCenterServer": false,
   "acounts": [
     {
-      "des": "Acsi",
+      "des": "acsi",
       "cookie":""
     }
   ],
@@ -40,7 +41,7 @@
     },{
       "rareDegree": 5,
       "des":"传说",
-      "buyAmount": 10000,
+      "buyAmount": 260000,
       "saleAmount": 999999
     }
   ]

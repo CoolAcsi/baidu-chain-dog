@@ -1,12 +1,15 @@
 package site.acsi.baidu.dog.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+
 /**
  * @author Acsi
  * @date 2018/2/14
  */
-@lombok.Data
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Pet {
-
     private String id;
     private String petId;
     private int birthType;
@@ -19,4 +22,5 @@ public class Pet {
     private String bgColor;
     private String petUrl;
     private String validCode;
+    private Long createTime = System.currentTimeMillis();
 }

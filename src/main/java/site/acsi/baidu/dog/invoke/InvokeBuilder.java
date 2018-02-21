@@ -24,11 +24,12 @@ public class InvokeBuilder {
     @Setter
     private String codeParseUrl;
 
+    @Setter
+    private String centerServer;
+
     @Bean
     PetOperationInvoke petOperationInvoke() {
-        OkHttpClient client = new OkHttpClient();
         Retrofit retrofit = new Retrofit.Builder()
-                .client(client)
                 .baseUrl(petUrl)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
@@ -44,5 +45,14 @@ public class InvokeBuilder {
                 .addConverterFactory(JacksonConverterFactory.create(mapper))
                 .build();
         return retrofit.create(CodeParseInvoke.class);
+    }
+
+    @Bean
+    DogMarketInvoke dogMarketInvoke() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(centerServer)
+                .addConverterFactory(JacksonConverterFactory.create())
+                .build();
+        return retrofit.create(DogMarketInvoke.class);
     }
 }

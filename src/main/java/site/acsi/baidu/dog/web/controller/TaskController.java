@@ -1,9 +1,6 @@
 package site.acsi.baidu.dog.web.controller;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.acsi.baidu.dog.config.GlobalConfig;
 import site.acsi.baidu.dog.pojo.GlobalConfigBean;
 import site.acsi.baidu.dog.task.BuyTask;
@@ -14,8 +11,9 @@ import javax.annotation.Resource;
 
 /**
  * @author Acsi
- * @date 2018/2/14
+ * @date 2018/2/14task
  */
+@RequestMapping("/")
 @RestController
 public class TaskController {
 
@@ -34,7 +32,7 @@ public class TaskController {
         config.getConfig().getAcounts().forEach(account -> buyTask.doTask(account));
     }
 
-    @RequestMapping(value = "task", method = RequestMethod.POST)
+    @PostMapping("/buyTask")
     public String task(@RequestBody GlobalConfigBean config) {
         this.config.setConfig(config);
         verCodeTask.init();
@@ -43,7 +41,7 @@ public class TaskController {
         return "ok";
     }
 
-    @RequestMapping("health")
+    @RequestMapping("/health")
     public String health() {
         return "ok";
     }

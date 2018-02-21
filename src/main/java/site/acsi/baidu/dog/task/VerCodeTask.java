@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -51,9 +52,9 @@ public class VerCodeTask {
     private Map<Acount, Queue<VerificationCode>> queueMap = Maps.newConcurrentMap();
 
 
-    private static final int APP_ID = 4;
+    private static final int APP_ID = 1;
     private static final int ONE_SECOND = 1000;
-    private static final int SAFE_QUEUE_SIZE = 1;
+    private static final int SAFE_QUEUE_SIZE = 0;
     private static final int VALID_TIME = 120000;
 
     @PostConstruct
@@ -65,7 +66,7 @@ public class VerCodeTask {
 
     public VerificationCode getVerCodeInfo(Acount acount) {
         if (queueMap.get(acount).isEmpty()) {
-            genVerCodeByAcount(acount);
+            storeVerCode(acount);
         }
         return queueMap.get(acount).poll();
     }
@@ -106,24 +107,28 @@ public class VerCodeTask {
             }
         }
         if (queue.size() < SAFE_QUEUE_SIZE) {
-            VerificationCodeData data = genVerificationCode(acount);
-            try {
-                String code = verCodeServices.get(config.getConfig().getVerCodeStrategy()).predict(data.getImg());
-                queue.offer(
-                        new VerificationCode(
-                                data.getSeed(),
-                                code,
-                                System.currentTimeMillis()));
-                if (config.getConfig().getLogSwitch()) {
-                    log.info("储备验证码成功，user:{} code:{}", acount.getDes(), code);
-                }
-                if (config.getConfig().getExportSwitch()) {
-                    imageUtils.convertBase64DataToImage(data.getImg(), config.getConfig().getExportVerCodeImgPath() + "/" + code + System.currentTimeMillis()%1000 + ".jpg");
-                }
-            } catch (IOException e) {
-                if (config.getConfig().getLogSwitch()) {
-                    log.error("识别验证码失败", e);
-                }
+            storeVerCode(acount);
+        }
+    }
+
+    private void storeVerCode(Acount acount) {
+        VerificationCodeData data = genVerificationCode(acount);
+        try {
+            String code = verCodeServices.get(config.getConfig().getVerCodeStrategy()).predict(data.getImg());
+            queueMap.get(acount).offer(
+                    new VerificationCode(
+                            data.getSeed(),
+                            code,
+                            System.currentTimeMillis()));
+            if (config.getConfig().getLogSwitch()) {
+                log.info("储备验证码成功，user:{} code:{}", acount.getDes(), code);
+            }
+            if (config.getConfig().getExportSwitch()) {
+                imageUtils.convertBase64DataToImage(data.getImg(), config.getConfig().getExportVerCodeImgPath() + "/" + code + System.currentTimeMillis()%1000 + ".jpg");
+            }
+        } catch (IOException e) {
+            if (config.getConfig().getLogSwitch()) {
+                log.error("识别验证码失败", e);
             }
         }
     }

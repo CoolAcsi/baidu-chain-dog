@@ -19,4 +19,5 @@ public class GlobalConfigBean {
     private List<Acount> acounts;
     private String exportVerCodeImgPath;
     private Boolean exportSwitch;
+    private Boolean isCenterServer;
 }

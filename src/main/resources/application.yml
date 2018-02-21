@@ -31,6 +31,7 @@ spring:
 url:
   petUrl: https://pet-chain.baidu.com/
   codeParseUrl: http://upload.chaojiying.net/
+  centerServer: http://127.0.0.1:8080
 chaojiyingConfig:
   user:
   pass:
