@@ -60,6 +60,6 @@ public class DogMarketTask {
                 Thread.sleep(600000);
             }
         }
-        Thread.sleep(System.currentTimeMillis() % 4000);
+        Thread.sleep(System.currentTimeMillis() % 6000);
     }
 }
