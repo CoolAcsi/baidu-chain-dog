@@ -115,13 +115,13 @@ config.json 配置
  - 使用前请先解压`resources/`下的`svm.model.zip`文件到该目录；
  
  #### v0.5
- - 项目重构，欢迎review  : )
+ - 项目重构，欢迎review
  - 优化了验证码校验逻辑，生单速度目测提升40%；
  - 更灵活的配置方式，使用config.json即可完成必要配置，开放一些配置项；
  - 更简洁的启动方式；
  - 更加人性化的日志；
  
  
- 欢迎交流，不乐意回答如何搭环境、如何运行等非技术问题，下面是我的微信：
+遇到问题欢迎提Issues~
  
- ![](https://ws4.sinaimg.cn/large/006tKfTcly1foahsdmz9vj30e80e8t8w.jpg)
+
